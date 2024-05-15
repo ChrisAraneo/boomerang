@@ -1,0 +1,47 @@
+{
+  "name": "boomerang",
+  "version": "0.0.1",
+  "description": "Boomerang is a simple Node.js utility script used to test the reachability of a host.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint \"src/**/*.{ts,json}\" --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.spec.ts\" \"src/**/*.json\"",
+    "start": "npm run build && node dist/boomerang.js --no-warnings",
+    "test": "jest",
+    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/boomerang.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisAraneo/boomerang.git"
+  },
+  "keywords": [
+    "ping",
+    "network",
+    "utility"
+  ],
+  "author": "Krzysztof Pająk (Chris Araneo)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChrisAraneo/boomerang/issues"
+  },
+  "homepage": "https://github.com/ChrisAraneo/boomerang#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.6",
+    "@types/lodash": "^4.14.202",
+    "@types/node": "^20.7.0",
+    "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "babel-jest": "^29.7.0",
+    "esbuild": "0.19.5",
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-jsonc": "^2.10.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {}
+}
