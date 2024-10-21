@@ -1,7 +1,7 @@
 import {
-  Logger as WinstonLogger,
-  format,
   createLogger,
+  format,
+  Logger as WinstonLogger,
   transports,
 } from 'winston';
 const { combine, timestamp, printf, colorize, prettyPrint, simple } = format;

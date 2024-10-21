@@ -1,5 +1,6 @@
 import { request } from 'undici';
-import { HttpClient } from './http-client.class'; // adjust the import according to your file structure
+
+import { HttpClient } from './http-client.class';
 
 jest.mock('undici', () => ({
   request: jest.fn(),

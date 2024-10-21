@@ -1,5 +1,6 @@
-import { Observable, catchError, from, map, of } from 'rxjs';
+import { catchError, from, map, Observable, of } from 'rxjs';
 import { request } from 'undici';
+
 import { Response } from './models/response.interface';
 
 export class HttpClient {
