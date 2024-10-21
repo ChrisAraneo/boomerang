@@ -49,7 +49,9 @@ describe('HttpClient', () => {
     });
 
     it('should catch errors and return { ok: false }', (done) => {
-      (request as jest.Mock).mockReturnValue(Promise.reject(new Error('Network error')));
+      (request as jest.Mock).mockReturnValue(
+        Promise.reject(new Error('Network error')),
+      );
 
       httpClient.get('http://example.com').subscribe((response) => {
         expect(response).toEqual({ ok: false });
