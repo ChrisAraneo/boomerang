@@ -1,5 +1,5 @@
-export interface Response {
-  ok: boolean;
-  status?: number;
+import { Status } from './status.interface';
+
+export interface Response extends Status {
   body?: NodeJS.ReadableStream | null;
 }
