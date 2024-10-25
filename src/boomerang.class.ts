@@ -1,3 +1,6 @@
+import { platform } from 'node:process';
+
+import path from 'path';
 import {
   BehaviorSubject,
   debounceTime,
@@ -8,13 +11,16 @@ import {
   Subscription,
   tap,
 } from 'rxjs';
+import soundPlay from 'sound-play';
 
 import { HttpClient } from './http-client.class';
 import { Logger } from './logger.class';
+import { Status } from './models/status.interface';
 
 export class Boomerang {
-  private _statuses = new BehaviorSubject<number | null>(null);
+  private _statuses = new BehaviorSubject<Status | null>(null);
   private subscription?: Subscription;
+  private isLinux: boolean = platform !== 'win32' && platform !== 'darwin';
 
   constructor(
     private readonly url: string,
@@ -23,7 +29,7 @@ export class Boomerang {
     private readonly httpClient: HttpClient,
   ) {}
 
-  get statuses(): Observable<number> {
+  get statuses(): Observable<Status> {
     return this._statuses.pipe(
       tap(() => {
         this.logger.info(`Throwing boomerang at ${this.url}`);
@@ -31,23 +37,38 @@ export class Boomerang {
       mergeMap((status) => {
         return this.httpClient.get(this.url).pipe(
           map((response) => ({
-            previousStatus: status,
-            currentStatus: response.status || null,
+            previous: status,
+            current: {
+              ok: response.ok,
+              status: response.status || null,
+            },
           })),
         );
       }),
-      tap(({ currentStatus }) => {
-        this.logger.info(
-          `Boomerang hit the target at came back with status ${currentStatus}`,
-        );
+      tap(({ current }) => {
+        const currentStatus = current.status;
+
+        if (typeof currentStatus === 'number') {
+          this.logger.info(
+            `Boomerang hit the target at came back with status ${currentStatus}`,
+          );
+        } else {
+          this.logger.info(
+            `Boomerang didn't hit the target (status ${currentStatus})`,
+          );
+        }
       }),
       debounceTime(this.debounceTime),
-      tap(({ currentStatus }) => {
-        this._statuses.next(currentStatus);
+      tap(({ current }) => {
+        this._statuses.next(current || null);
       }),
-      map(({ currentStatus }) => currentStatus),
-      filter((status) => typeof status === 'number'),
-      // TODO Play sound
+      tap(({ previous, current }) => {
+        if (current.ok && !previous.ok) {
+          this.playPingSound();
+        }
+      }),
+      map(({ current }) => current),
+      filter((current) => typeof current.status === 'number'),
     );
   }
 
@@ -57,5 +78,20 @@ export class Boomerang {
 
   destroy(): void {
     this.subscription?.unsubscribe();
+  }
+
+  private playPingSound(): void {
+    const filepath = path.join(__dirname, './ping.mp3');
+    const volume = 1;
+
+    this.logger.info('Playing ping sound');
+
+    if (this.isLinux) {
+      this.logger.error('Playing sound on Linux is not supported yet');
+    } else {
+      soundPlay.play(filepath, volume).catch((error: unknown) => {
+        this.logger.error('Error while playing sound', error);
+      });
+    }
   }
 }
