@@ -1,4 +1,4 @@
 export interface Status {
   ok: boolean;
-  status?: number;
+  status?: number; // TODO Rename to code
 }
