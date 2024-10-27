@@ -16,6 +16,7 @@ import soundPlay from 'sound-play';
 import { HttpClient } from './http-client.class';
 import { Logger } from './logger.class';
 import { Status } from './models/status.interface';
+import { isNumber } from './utils/is-number.function';
 
 export class Boomerang {
   private _statuses = new BehaviorSubject<Status | null>(null);
@@ -48,7 +49,7 @@ export class Boomerang {
       tap(({ current }) => {
         const currentStatus = current.status;
 
-        if (typeof currentStatus === 'number') {
+        if (isNumber(currentStatus)) {
           this.logger.info(
             `Boomerang hit the target at came back with status ${currentStatus}`,
           );
@@ -68,7 +69,7 @@ export class Boomerang {
         }
       }),
       map(({ current }) => current),
-      filter((current) => typeof current.status === 'number'),
+      filter((current) => isNumber(current.status)),
     );
   }
 
