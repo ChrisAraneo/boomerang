@@ -6,6 +6,8 @@ import {
 } from 'winston';
 const { combine, timestamp, printf, colorize, prettyPrint, simple } = format;
 
+// TODO Fix timestamps
+
 export class Logger {
   private logger: WinstonLogger;
 
