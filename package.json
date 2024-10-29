@@ -45,6 +45,7 @@
     "typescript-eslint": "^8.10.0"
   },
   "dependencies": {
+    "command-line-args": "^6.0.1",
     "rxjs": "^7.8.1",
     "sound-play": "^1.1.0",
     "undici": "^6.18.1",
