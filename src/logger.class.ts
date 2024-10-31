@@ -6,8 +6,6 @@ import {
 } from 'winston';
 const { combine, timestamp, printf, colorize, prettyPrint, simple } = format;
 
-// TODO Fix timestamps
-
 export class Logger {
   private logger: WinstonLogger;
 
@@ -52,7 +50,7 @@ export class Logger {
 
           return colorize().colorize(
             msg.level,
-            `[${msg.timestamp}] [${msg.level.toLocaleUpperCase()}] - ${message}${
+            `[${this.getTimestamp()}] [${msg.level.toLocaleUpperCase()}] - ${message}${
               splat ? ' ' + JSON.stringify(splat) : ''
             }`,
           );
@@ -60,5 +58,9 @@ export class Logger {
       ),
       transports: [new transports.Console()],
     });
+  }
+
+  private getTimestamp(): string {
+    return (new Date()).toISOString().replace('T', ' ').replace('Z', '');
   }
 }
