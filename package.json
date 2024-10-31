@@ -4,7 +4,7 @@
   "description": "Boomerang is a simple Node.js utility script used to test the reachability of a host.",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && node dist/index.js --no-warnings",
+    "start": "npm run build && node dist/index.js",
     "lint": "eslint \"src/**/*.{ts,json}\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.spec.ts\" \"src/**/*.json\"",
     "chores": "npm run lint && npm run format",
