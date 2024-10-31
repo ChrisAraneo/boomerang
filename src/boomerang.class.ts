@@ -1,3 +1,4 @@
+import { spawn } from 'node:child_process';
 import { platform } from 'node:process';
 
 import path from 'path';
@@ -13,7 +14,7 @@ import {
 } from 'rxjs';
 import soundPlay from 'sound-play';
 
-import { HttpClient } from './http-client.class';
+import { HttpClient } from './http/http-client.class';
 import { Logger } from './logger.class';
 import { Status } from './models/status.interface';
 import { isNumber } from './utils/is-number.function';
@@ -88,7 +89,7 @@ export class Boomerang {
     this.logger.info('Playing ping sound');
 
     if (this.isLinux) {
-      this.logger.error('Playing sound on Linux is not supported yet');
+      spawn('play', [filepath], { stdio: 'ignore' });
     } else {
       soundPlay.play(filepath, volume).catch((error: unknown) => {
         this.logger.error('Error while playing sound', error);
