@@ -9,7 +9,7 @@ While developing projects I am often dealing with long build and reload times th
 
 # Prerequisites
 
-Install [Node.js] which includes [Node Package Manager][npm].
+Install [Node.js](https://nodejs.org/en) which includes [Node Package Manager (npm)](https://www.npmjs.com/).
 After installation you should be able to run the command `npm --version` without errors:
 
 ```bash
