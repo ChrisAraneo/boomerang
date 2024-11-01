@@ -1,30 +1,35 @@
-import { Logger as WinstonLogger, format, createLogger, transports } from 'winston';
+import {
+  createLogger,
+  format,
+  Logger as WinstonLogger,
+  transports,
+} from 'winston';
 const { combine, timestamp, printf, colorize, prettyPrint, simple } = format;
 
 export class Logger {
   private logger: WinstonLogger;
 
-  constructor(private logLevel: string = 'info') {
+  constructor(private logLevel = 'info') {
     this.initialize();
   }
 
-  debug(message: string, ...meta: any[]): void {
+  debug(message: string, ...meta: (object | unknown)[]): void {
     this.logger.debug(message, ...meta);
   }
 
-  info(message: string, ...meta: any[]): void {
+  info(message: string, ...meta: (object | unknown)[]): void {
     this.logger.info(message, ...meta);
   }
 
-  warn(message: string, ...meta: any[]): void {
+  warn(message: string, ...meta: (object | unknown)[]): void {
     this.logger.warn(message, ...meta);
   }
 
-  error(message: string, ...meta: any[]): void {
+  error(message: string, ...meta: (object | unknown)[]): void {
     this.logger.error(message, ...meta);
   }
 
-  setLogLevel(logLevel: string = 'info'): void {
+  setLogLevel(logLevel = 'info'): void {
     this.logLevel = logLevel;
     this.initialize();
   }
@@ -45,7 +50,7 @@ export class Logger {
 
           return colorize().colorize(
             msg.level,
-            `[${msg.timestamp}] [${msg.level.toLocaleUpperCase()}] - ${message}${
+            `[${this.getTimestamp()}] [${msg.level.toLocaleUpperCase()}] - ${message}${
               splat ? ' ' + JSON.stringify(splat) : ''
             }`,
           );
@@ -53,5 +58,9 @@ export class Logger {
       ),
       transports: [new transports.Console()],
     });
+  }
+
+  private getTimestamp(): string {
+    return new Date().toISOString().replace('T', ' ').replace('Z', '');
   }
 }
