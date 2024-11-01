@@ -21,6 +21,7 @@ try {
 (() => {
   let debounceTime: number;
 
+  logger.info(`Boomerang v0.1.0`);
   logger.info(`Arguments: ${JSON.stringify(options)}`);
 
   if (!options['url']) {

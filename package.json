@@ -1,7 +1,7 @@
 {
   "name": "boomerang",
-  "version": "0.0.1",
-  "description": "Boomerang is a simple Node.js utility script used to test the reachability of a host.",
+  "version": "0.1.0",
+  "description": "Boomerang is a simple Node.js utility script used to test the reachability of a host",
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node dist/index.js",
@@ -18,7 +18,8 @@
   "keywords": [
     "ping",
     "network",
-    "utility"
+    "utility",
+    "sound"
   ],
   "author": "Krzysztof Pająk (Chris Araneo) <chris.araneo@gmail.com>",
   "license": "MIT",
