@@ -61,6 +61,6 @@ export class Logger {
   }
 
   private getTimestamp(): string {
-    return (new Date()).toISOString().replace('T', ' ').replace('Z', '');
+    return new Date().toISOString().replace('T', ' ').replace('Z', '');
   }
 }
